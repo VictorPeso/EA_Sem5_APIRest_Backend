@@ -1,7 +1,7 @@
 import Joi, { ObjectSchema } from 'joi';
 import { NextFunction, Request, Response } from 'express';
-import { IAuthor } from '../models/Author';
-import { IBook } from '../models/Book';
+import { IOrganizacion } from '../models/Organizacion';
+import { IUsuario } from '../models/Usuario';
 import Logging from '../library/Logging';
 
 export const ValidateJoi = (schema: ObjectSchema) => {
@@ -19,26 +19,26 @@ export const ValidateJoi = (schema: ObjectSchema) => {
 };
 
 export const Schemas = {
-    author: {
-        create: Joi.object<IAuthor>({
+    organizacion: {
+        create: Joi.object<IOrganizacion>({
             name: Joi.string().required()
         }),
-        update: Joi.object<IAuthor>({
+        update: Joi.object<IOrganizacion>({
             name: Joi.string().required()
         })
     },
-    book: {
-        create: Joi.object<IBook>({
-            author: Joi.string()
+    usuario: {
+        create: Joi.object<IUsuario>({
+            organizacion: Joi.string()
                 .regex(/^[0-9a-fA-F]{24}$/)
                 .required(),
-            title: Joi.string().required()
+            name: Joi.string().required()
         }),
-        update: Joi.object<IBook>({
-            author: Joi.string()
+        update: Joi.object<IUsuario>({
+            organizacion: Joi.string()
                 .regex(/^[0-9a-fA-F]{24}$/)
                 .required(),
-            title: Joi.string().required()
+            name: Joi.string().required()
         })
     }
 };
