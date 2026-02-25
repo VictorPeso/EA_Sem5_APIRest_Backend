@@ -1,6 +1,7 @@
 import express from 'express';
 import http from 'http';
 import mongoose from 'mongoose';
+import cors from 'cors';
 import { config } from './config/config';
 import Logging from './library/Logging';
 import organizacionRoutes from './routes/Organizacion';
@@ -36,17 +37,7 @@ const StartServer = () => {
     router.use(express.json());
 
     /** Rules of our API */
-    router.use((req, res, next) => {
-        res.header('Access-Control-Allow-Origin', '*');
-        res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-
-        if (req.method == 'OPTIONS') {
-            res.header('Access-Control-Allow-Methods', 'PUT, POST, PATCH, DELETE, GET');
-            return res.status(200).json({});
-        }
-
-        next();
-    });
+    router.use(cors());
 
     /** Routes */
     router.use('/organizaciones', organizacionRoutes);
