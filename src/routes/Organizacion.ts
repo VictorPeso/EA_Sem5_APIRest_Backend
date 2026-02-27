@@ -4,10 +4,10 @@ import { Schemas, ValidateJoi } from '../middleware/Joi';
 
 const router = express.Router();
 
-router.post('/create', ValidateJoi(Schemas.organizacion.create), controller.createOrganizacion);
-router.get('/get/:organizacionId', controller.readOrganizacion);
-router.get('/get', controller.readAll);
-router.patch('/update/:organizacionId', ValidateJoi(Schemas.organizacion.update), controller.updateOrganizacion);
-router.delete('/delete/:organizacionId', controller.deleteOrganizacion);
+router.post('/', ValidateJoi(Schemas.organizacion.create), controller.createOrganizacion);
+router.get('/:organizacionId', controller.readOrganizacion);
+router.get('/', controller.readAll);
+router.put('/:organizacionId', ValidateJoi(Schemas.organizacion.update), controller.updateOrganizacion);
+router.delete('/:organizacionId', controller.deleteOrganizacion);
 
-export = router;
+export default router;
