@@ -44,7 +44,7 @@ const StartServer = () => {
     router.use(cors());
 
     /** Swagger */
-    router.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+    router.use('/api', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
     /** Routes */
     router.use('/organizaciones', organizacionRoutes);
