@@ -6,6 +6,8 @@ import { config } from './config/config';
 import Logging from './library/Logging';
 import organizacionRoutes from './routes/Organizacion';
 import usuarioRoutes from './routes/Usuario';
+import swaggerUi from 'swagger-ui-express';
+import { swaggerSpec } from './swagger';
 
 const router = express();
 
@@ -22,12 +24,14 @@ mongoose
 const StartServer = () => {
     /** Log the request */
     router.use((req, res, next) => {
-        /** Log the req */
-        Logging.info(`Incomming - METHOD: [${req.method}] - URL: [${req.url}] - IP: [${req.socket.remoteAddress}]`);
+        Logging.info(
+            `Incomming - METHOD: [${req.method}] - URL: [${req.url}] - IP: [${req.socket.remoteAddress}]`
+        );
 
         res.on('finish', () => {
-            /** Log the res */
-            Logging.info(`Result - METHOD: [${req.method}] - URL: [${req.url}] - IP: [${req.socket.remoteAddress}] - STATUS: [${res.statusCode}]`);
+            Logging.info(
+                `Result - METHOD: [${req.method}] - URL: [${req.url}] - IP: [${req.socket.remoteAddress}] - STATUS: [${res.statusCode}]`
+            );
         });
 
         next();
@@ -38,6 +42,9 @@ const StartServer = () => {
 
     /** Rules of our API */
     router.use(cors());
+
+    /** Swagger */
+    router.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
     /** Routes */
     router.use('/organizaciones', organizacionRoutes);
@@ -57,5 +64,7 @@ const StartServer = () => {
         });
     });
 
-    http.createServer(router).listen(config.server.port, () => Logging.info(`Server is running on port ${config.server.port}`));
+    http.createServer(router).listen(config.server.port, () =>
+        Logging.info(`Server is running on port ${config.server.port}`)
+    );
 };
